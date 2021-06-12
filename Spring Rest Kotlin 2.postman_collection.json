@@ -1,0 +1,502 @@
+{
+	"info": {
+		"_postman_id": "678980ac-1a69-4379-bdcf-edde2b8faa23",
+		"name": "Spring Rest Kotlin 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"aluno@email.com\",\r\n    \"senha\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "actuator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actuator/health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actuator/beans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/beans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"beans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actuator/caches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/caches",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"caches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actuator/info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "topicos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos?page=0&size=10&sort=id,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "id,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topicos por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos/3?page=0&size=3&sort=id,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"3"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						},
+						{
+							"key": "sort",
+							"value": "id,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topicos por id not found",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topicos + nome curso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos?nomeCurso=Spring+Boot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos"
+					],
+					"query": [
+						{
+							"key": "nomeCurso",
+							"value": "Spring+Boot"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "criar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiMSIsImlhdCI6MTYyMzQ1ODE4MiwiZXhwIjoxNjIzNTQ0NTgyfQ.Wm6J8CWSyGvmzqsffgkjwAm_FP0Jt3Tv_Q1yiZTp5O0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\":\"Dúvida Postman\",\r\n    \"mensagem\":\"Texto da mensagem\",\r\n    \"nomeCurso\":\"Spring Boot\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/topicos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "criar Erro Validação",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiVXN1YXJpbyhpZD0xLCBub21lPUFsdW5vLCBlbWFpbD1hbHVub0BlbWFpbC5jb20sIHNlbmhhPSQyYSQxMCR3S0tkdXltSkdpZ0VuNjE4LnpnR1J1UUprWDBTYXV5LzRKQmQzbUhta2c1clNMbS5vazlGMiwgcGVyZmlzPVtdKSIsImlhdCI6MTYyMzQ1Mjc1MiwiZXhwIjoxNjIzNTM5MTUyfQ.IYdbdb70wZrpQhXtv7NzVv6tQhTMhoTTqWc0BaPo-FA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\":\"\",\r\n    \"mensagem\":\"Texto da mensagem\",\r\n    \"nomeCurso\":\"Spring Boot\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/topicos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiVXN1YXJpbyhpZD0xLCBub21lPUFsdW5vLCBlbWFpbD1hbHVub0BlbWFpbC5jb20sIHNlbmhhPSQyYSQxMCR3S0tkdXltSkdpZ0VuNjE4LnpnR1J1UUprWDBTYXV5LzRKQmQzbUhta2c1clNMbS5vazlGMiwgcGVyZmlzPVtdKSIsImlhdCI6MTYyMzQ1Mjc1MiwiZXhwIjoxNjIzNTM5MTUyfQ.IYdbdb70wZrpQhXtv7NzVv6tQhTMhoTTqWc0BaPo-FA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\":\"Dúvida Postman 2\",\r\n    \"mensagem\":\"Texto da mensagem 2\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/topicos/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar not found",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiVXN1YXJpbyhpZD0xLCBub21lPUFsdW5vLCBlbWFpbD1hbHVub0BlbWFpbC5jb20sIHNlbmhhPSQyYSQxMCR3S0tkdXltSkdpZ0VuNjE4LnpnR1J1UUprWDBTYXV5LzRKQmQzbUhta2c1clNMbS5vazlGMiwgcGVyZmlzPVtdKSIsImlhdCI6MTYyMzQ1Mjc1MiwiZXhwIjoxNjIzNTM5MTUyfQ.IYdbdb70wZrpQhXtv7NzVv6tQhTMhoTTqWc0BaPo-FA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\":\"Dúvida Postman 2\",\r\n    \"mensagem\":\"Texto da mensagem 2\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/topicos/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiVXN1YXJpbyhpZD0xLCBub21lPUFsdW5vLCBlbWFpbD1hbHVub0BlbWFpbC5jb20sIHNlbmhhPSQyYSQxMCR3S0tkdXltSkdpZ0VuNjE4LnpnR1J1UUprWDBTYXV5LzRKQmQzbUhta2c1clNMbS5vazlGMiwgcGVyZmlzPVtdKSIsImlhdCI6MTYyMzQ1Mjc1MiwiZXhwIjoxNjIzNTM5MTUyfQ.IYdbdb70wZrpQhXtv7NzVv6tQhTMhoTTqWc0BaPo-FA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete not found",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgZG8gZsOzcnVtIiwic3ViIjoiVXN1YXJpbyhpZD0xLCBub21lPUFsdW5vLCBlbWFpbD1hbHVub0BlbWFpbC5jb20sIHNlbmhhPSQyYSQxMCR3S0tkdXltSkdpZ0VuNjE4LnpnR1J1UUprWDBTYXV5LzRKQmQzbUhta2c1clNMbS5vazlGMiwgcGVyZmlzPVtdKSIsImlhdCI6MTYyMzQ1Mjc1MiwiZXhwIjoxNjIzNTM5MTUyfQ.IYdbdb70wZrpQhXtv7NzVv6tQhTMhoTTqWc0BaPo-FA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topicos/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topicos",
+						"999"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
