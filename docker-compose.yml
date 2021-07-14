@@ -1,0 +1,97 @@
+version: '3.3'
+services: 
+
+    wiremock:
+        image: duberton/wiremock:1.0
+        ports: 
+            - "8081:8080"
+        volumes: 
+            - ./mocks/__files:/home/wiremock/__files
+            - ./mocks/mappings:/home/wiremock/mappings
+
+    jaeger:
+        image: jaegertracing/all-in-one:latest
+        ports: 
+            - "5775:5775/udp"
+            - "16686:16686"
+
+    akhq:
+        image: tchiotludo/akhq
+        environment: 
+            AKHQ_CONFIGURATION: |
+                akhq:
+                    connections:
+                        docker-kafka-server:
+                            properties:
+                                bootstrap.servers: "broker:19092"
+        ports: 
+            - 8082:8080
+        links: 
+            - broker
+    
+    zookeeper:
+        image: confluentinc/cp-zookeeper:5.2.4
+        hostname: zookeeper
+        container_name: zookeeper
+        ports: 
+            - "2181:2181"
+        environment: 
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+    
+    broker:
+        image: confluentinc/cp-kafka:5.2.4
+        hostname: broker
+        container_name: broker
+        ports: 
+            - "9092:9092"
+        environment: 
+            KAFKA_BROKER_ID: 0
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT, LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+            KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+        depends_on: 
+            - zookeeper
+
+    #COMANDO AWSCLI PARA POSTAR NA FILA
+    #aws --endpoint-url=http://localstack:4566 sqs --region=us-east-1 send-message --queue-url http://localstack:4566/000000000000/fila-sqs --message-body '{"documente":"teste"}`
+    #VisibilityTimeout esta em 10 segundos para teste, para ver os reenvios ou comentar o ack ou calsar alguma exception.
+    aws-cli:
+        image: mesosphere/aws-cli
+        environment: 
+            - AWS_ACCESS_KEY_ID=test
+            - AWS_SECRET_ACCESS_KEY=test
+            - AWS_DEFAULT_REGION=us-east-1
+        entrypoint: /bin/sh -c
+        command: >
+            "
+                sleep 20
+                ws --endpoint-url=http://localstack:4566 sqs --region=us-east-1 create-queue fila-sqs --atributes VisibilityTimeout=10
+                ws --endpoint-url=http://localstack:4566 sqs --region=us-east-1 get-queue-atributes --queue-url http://localstack:4566/000000000000/fila-sqs
+
+                tail /dev/stdout
+            "
+        depends_on: 
+            - localstack
+
+    localstack:
+        image: localstack/localstack
+        ports: 
+            - "4566:4566"
+        environment: 
+            - SERVICES=${SERVICES- }
+            - START_WEB=1
+            - DEBUG=1
+            - AWS_ACCESS_KEY_ID=test
+            - AWS_SECRET_ACCESS_KEY=test
+    
+    consul:
+        image: library/consul
+        ports: 
+            - "8300:8300"
+            - "8400:8400"
+            - "8500:8500"
+            - "8600:8600"
